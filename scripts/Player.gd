@@ -30,6 +30,10 @@ func _physics_process(delta: float) -> void:
 	
 	move_direction.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 	move_direction.z = Input.get_action_strength("back") - Input.get_action_strength("forward")
+	
+	if Input.is_mouse_button_pressed(1) and Input.is_mouse_button_pressed(2):
+		move_direction.z = -1
+	
 	move_direction = move_direction.rotated(Vector3.UP, spring_arm.rotation.y).normalized()
 	
 	velocity.x = move_direction.x * speed
