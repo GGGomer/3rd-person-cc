@@ -5,6 +5,7 @@
 - Basic movement (walk, jump)
 - Steep slopes count as walls (steepness is configurable)
 - Lock cursor and move camera
+- Seemless switching between KBM/Joypad
 
 ## Controls
 - Movement:
