@@ -1,15 +1,15 @@
-extends SpringArm
+extends SpringArm3D
 
-export var mouse_sensitivity := 0.05
-export var joystick_y_sensitivity := 2.5
-export var joystick_x_sensitivity := 1
+@export var mouse_sensitivity := 0.05
+@export var joystick_y_sensitivity := 2.5
+@export var joystick_x_sensitivity := 1
 
 var mouse_position = Vector2.ZERO
 
 var using_controller = false
 
 func _ready() -> void:
-	set_as_toplevel(true)
+	set_as_top_level(true)
 	
 func _unhandled_input(event):
 	# Mouse camera toggle
@@ -17,14 +17,14 @@ func _unhandled_input(event):
 		if event.get_button_index() == 2:
 			if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-				Input.warp_mouse_position(mouse_position)
+				Input.warp_mouse(mouse_position)
 			else:
 				mouse_position = event.position
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		# Mouse scroll zoom:
-		if event.get_button_index() == BUTTON_WHEEL_UP:
+		if event.get_button_index() == MOUSE_BUTTON_WHEEL_UP:
 			spring_length -= 0.5
-		if event.get_button_index() == BUTTON_WHEEL_DOWN:
+		if event.get_button_index() == MOUSE_BUTTON_WHEEL_DOWN:
 			spring_length += 0.5
 		
 		spring_length = clamp(spring_length, 2, 20)
@@ -33,7 +33,7 @@ func _unhandled_input(event):
 	if event is InputEventMouseMotion and using_controller == true:
 		using_controller = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		Input.warp_mouse_position(mouse_position)
+		Input.warp_mouse(mouse_position)
 		
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		rotation_degrees.x -= event.relative.y * mouse_sensitivity
